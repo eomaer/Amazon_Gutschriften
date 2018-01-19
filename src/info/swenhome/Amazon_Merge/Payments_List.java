@@ -22,6 +22,7 @@ public class Payments_List extends CSV_LIST{
                 }
             }
         }
+
         ZAHLUNGEN_VERARBEITEN("EUR");
         return ergebnisliste;
     }

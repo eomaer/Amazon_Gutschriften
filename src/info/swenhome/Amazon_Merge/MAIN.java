@@ -14,16 +14,23 @@ public class MAIN {
     }
 
     public static void main (String[] args) {
-       // CSV_LIST orders=new CSV_LIST();
+        Orders_List orders=new Orders_List();
         Payments_List payments=new Payments_List();
-        //JFileChooser fc = new JFileChooser();
-        //fc.showOpenDialog(null);
-        //orders.FILE_TO_LIST(fc.getSelectedFile());
+        //Listen Einlesen
+        JFileChooser fc = new JFileChooser();
+        fc.setDialogTitle("Orders_Liste auswählen");
+        fc.showOpenDialog(null);
+        orders.FILE_TO_LIST(fc.getSelectedFile());
+
         JFileChooser fc_payments = new JFileChooser();
+        fc_payments.setDialogTitle("Payments_Liste auswählen");
         fc_payments.showOpenDialog(null);
         payments.FILE_TO_LIST(fc_payments.getSelectedFile());
+
+        //Listen verarbeiten
         payments=payments.ZAHLUNGEN_FILTERN();
-        payments.PRINT_LIST();
+//        payments.PRINT_LIST();
+        orders.PRINT_LIST();
         //CONNECT_LIST(orders,payments);
 
 
