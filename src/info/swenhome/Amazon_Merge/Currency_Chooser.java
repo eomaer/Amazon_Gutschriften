@@ -1,6 +1,7 @@
 package info.swenhome.Amazon_Merge;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -11,14 +12,22 @@ public class Currency_Chooser extends JFrame implements ActionListener {
     private JList list1 = new JList(this.currencies);
 
     public Currency_Chooser()
-    {   setBounds(100,100,300,300);
+    {
+        setBounds(100,100,150,150);
+        setLayout(new BorderLayout());
         setUndecorated(true);
-        getRootPane().setWindowDecorationStyle(JRootPane.NONE);
         this.abschickenButton.addActionListener(this);
         JPanel panel=new JPanel();
         panel.add(this.list1);
-        panel.add(abschickenButton);
-        add(panel);
+        JLabel spacer=new JLabel(" ",SwingConstants.CENTER);
+        JPanel space=new JPanel();
+        space.setLayout(new GridLayout(3,1));
+        space.add(spacer);
+        space.add(spacer);
+        space.add(spacer);
+        add(BorderLayout.NORTH,space);
+        add(BorderLayout.CENTER,panel);
+        add(BorderLayout.SOUTH,abschickenButton);
         setTitle("Währungsauswahl");
         this.list1.setSelectedIndex(0);
         setVisible(true);
