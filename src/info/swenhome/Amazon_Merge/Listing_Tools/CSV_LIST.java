@@ -1,11 +1,10 @@
-package info.swenhome.Amazon_Merge;
+package info.swenhome.Amazon_Merge.Listing_Tools;
 
-import java.io.File;
+import org.apache.commons.io.FileUtils;
+
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.BufferedReader;
 
 public class CSV_LIST {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -240,4 +239,21 @@ public class CSV_LIST {
             linecounter++;
         }
     }
+    public void SAVE_LIST(File file){
+        String inhalt="";
+        for (List<String> line:this.GET_list()){
+            for(String entry:line){
+            inhalt=inhalt + entry + '\t';
+            }
+        inhalt=inhalt+'\r';
+        }
+
+        try {
+            FileUtils.writeStringToFile(file,inhalt);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 }
