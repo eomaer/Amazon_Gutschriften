@@ -14,12 +14,15 @@ import org.jdatepicker.impl.*;
 public class Action_Chooser extends JFrame implements ActionListener, WindowListener {
         private boolean action_performed=false;
         private int action_choosed=0;
-        private JButton RefundButton=new JButton("Refunds vorbereiten");
+        private JButton RefundButton=new JButton("Refunds vorbereiten Mit Datum");
+        private JButton RefundButton2=new JButton("Refunds vorbereiten ohne Datum");
         private JButton AuftragButton=new JButton("Aufträge vorbereiten");
+        private JButton PaymentsButton=new JButton("Payments kombinieren");
         public Action_Chooser(String declaration){
             this.AuftragButton.addActionListener(this);
             this.RefundButton.addActionListener(this);
-
+            this.PaymentsButton.addActionListener(this);
+            this.RefundButton2.addActionListener(this);
             //Erklärung schreiben
             JLabel declarationPanel=new JLabel("Bitte Aktion wählen",SwingConstants.CENTER);
             JPanel declarationSpace=new JPanel();
@@ -31,12 +34,14 @@ public class Action_Chooser extends JFrame implements ActionListener, WindowList
             space.add(new JLabel(" ",SwingConstants.CENTER));
 
             JPanel buttons=new JPanel();
-            buttons.setLayout(new GridLayout(2,1));
+            buttons.setLayout(new GridLayout(2,2));
             buttons.add(RefundButton);
+            buttons.add(RefundButton2);
             buttons.add(AuftragButton);
+            buttons.add(PaymentsButton);
 
             //Fenster Aufbauen
-            setBounds(100,100,200,150);
+            setBounds(100,100,400,150);
             setLayout(new BorderLayout());
             //setUndecorated(true);
             add(BorderLayout.NORTH,declarationSpace);
@@ -63,6 +68,10 @@ public class Action_Chooser extends JFrame implements ActionListener, WindowList
                     this.action_choosed = 1;
                 } else if (e.getSource() == RefundButton) {
                     this.action_choosed = 2;
+                }else if(e.getSource()==PaymentsButton){
+                    this.action_choosed=4;
+                }else if(e.getSource()==RefundButton2){
+                    this.action_choosed=5;
                 }
                 this.action_performed=true;
     }

@@ -31,7 +31,8 @@ public class Payments_List extends CSV_LIST{
         ZAHLUNGEN_VERARBEITEN(currency);
         return ergebnisliste;
     }
-    public Payments_List ZAHLUNGEN_VERARBEITEN(String currency){
+
+    private Payments_List ZAHLUNGEN_VERARBEITEN(String currency){
         this.ADD_COLUMN("currency");
         int i=0;
         for(List<String> line:this.GET_list()){
@@ -45,6 +46,7 @@ public class Payments_List extends CSV_LIST{
         }
         return this;
     }
+
     public Payments_List FILTER_BY_DATE(String StartDate, String EndDate){
         Payments_List ergebnisliste=new Payments_List();
         DateFormat format=new SimpleDateFormat("dd.MM.yyyy");
@@ -59,8 +61,9 @@ public class Payments_List extends CSV_LIST{
                 ergebnisliste.GET_list().add(line);
                 i++;
             }
+            if(i!=0){
             try {
-                if(format.parse(line.get(16)).compareTo(edate)<0){
+                if(format.parse(line.get(16)).compareTo(edate)<=0){
                     if(format.parse(line.get(16)).compareTo(sdate)>=0){
                         ergebnisliste.GET_list().add(line);
                     }
@@ -69,6 +72,7 @@ public class Payments_List extends CSV_LIST{
             } catch (ParseException e) {
                 e.printStackTrace();
             }
+        }
         }
         return ergebnisliste;
     }
@@ -85,6 +89,7 @@ public class Payments_List extends CSV_LIST{
         }
         return ergebnisliste;
     }
+
     public Payments_List Zusammenfassen(){
         Payments_List ergebnisliste=new Payments_List();
         int i=0;
@@ -101,6 +106,7 @@ public class Payments_List extends CSV_LIST{
                 ergebnisline.add("Waehrung");
                 ergebnisline.add("Umrechnungskurs");
                 ergebnisline.add("Betrag in Euro");
+                ergebnisline.add("Original-Date");
             }
             else{
                 ergebnisline.add("1");
@@ -113,9 +119,24 @@ public class Payments_List extends CSV_LIST{
                 ergebnisline.add(line.get(24));
                 ergebnisline.add("0");
                 ergebnisline.add("0");
+                ergebnisline.add(line.get(line.size()-1));
             }
             i++;
             ergebnisliste.GET_list().add(ergebnisline);
+        }
+        return ergebnisliste;
+    }
+
+    public Payments_List Add_Date() {
+        Payments_List ergebnisliste = new Payments_List();
+        int i=0;
+        for(List<String> line:this.GET_list()){
+
+            if(!(i==0)){
+            line.set(line.size()-1, line.get(16));
+            }
+            ergebnisliste.GET_list().add(line);
+            i++;
         }
         return ergebnisliste;
     }

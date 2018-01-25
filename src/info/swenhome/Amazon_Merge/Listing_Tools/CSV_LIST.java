@@ -1,10 +1,12 @@
 package info.swenhome.Amazon_Merge.Listing_Tools;
 
+import info.swenhome.Amazon_Merge.Supplements.Ladebalken;
 import org.apache.commons.io.FileUtils;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CSV_LIST {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -21,7 +23,7 @@ public class CSV_LIST {
     //Konstruktoren, man kann nichts übergeben, dann muss man die Datei auswählen,
     //man kann einen pfad übergeben, oder ein file oder eine liste.
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public CSV_LIST(){
+    CSV_LIST(){
 
     }
 
@@ -155,15 +157,15 @@ public class CSV_LIST {
     public String ERSETZE_SONDERZEICHEN(String eingabe){
         String ausgabe=null;
         ausgabe=eingabe.replace("ä","ae");
-        ausgabe=eingabe.replace("ö","oe");
-        ausgabe=eingabe.replace("ü","ue");
-        ausgabe=eingabe.replace("Ä","Ae");
-        ausgabe=eingabe.replace("Ö","Oe");
-        ausgabe=eingabe.replace("Ü","Ue");
-        ausgabe=eingabe.replace("ß","ss");
-        ausgabe=eingabe.replace(';',',');
-        ausgabe=eingabe.replace('\t',';');
-        ausgabe=eingabe.replace('\u0009',';');
+        ausgabe=ausgabe.replace("ö","oe");
+        ausgabe=ausgabe.replace("ü","ue");
+        ausgabe=ausgabe.replace("Ä","Ae");
+        ausgabe=ausgabe.replace("Ö","Oe");
+        ausgabe=ausgabe.replace("Ü","Ue");
+        ausgabe=ausgabe.replace("ß","ss");
+        ausgabe=ausgabe.replace(';',',');
+        ausgabe=ausgabe.replace('\t',';');
+        ausgabe=ausgabe.replace('\u0009',';');
         return ausgabe;
     }
 
@@ -239,21 +241,29 @@ public class CSV_LIST {
             linecounter++;
         }
     }
-    public void SAVE_LIST(File file){
-        String inhalt="";
-        for (List<String> line:this.GET_list()){
-            for(String entry:line){
-            inhalt=inhalt + entry + '\t';
+    public void SAVE_LIST(File file) {
+//HIER MUSS DIE SAVE-FUNKTION ANGEPASST WERDEN; DA DIE FILES VIEL ZU GROß WERDEN!!!
+        String inhalt = "";
+        int i=0;
+        Ladebalken ld=new Ladebalken("Speichern");
+        this.UPDATE_VALUES();
+        for (List<String> line : this.GET_list()) {
+            String collect;
+            collect = line.stream().collect(Collectors.joining(String.valueOf('\t')));
+            try (FileWriter fw = new FileWriter(file.getAbsolutePath(), true);
+                 BufferedWriter bw = new BufferedWriter(fw);
+                 PrintWriter out = new PrintWriter(bw)) {
+                out.println(collect);
+                out.close();
+                //more code
+            } catch (IOException e) {
+                //exception handling left as an exercise for the reader
             }
-        inhalt=inhalt+'\r';
-        }
+            ld.SET_VALUE(i*100/this.GET_zeilenanzahl());
+            i++;
 
-        try {
-            FileUtils.writeStringToFile(file,inhalt);
-        } catch (IOException e) {
-            e.printStackTrace();
         }
-
+        ld.SET_VISIBLE(false);
     }
 
 }
