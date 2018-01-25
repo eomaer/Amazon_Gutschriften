@@ -61,7 +61,7 @@ public class Payments_List extends CSV_LIST{
                 ergebnisliste.GET_list().add(line);
                 i++;
             }
-            if(i!=0){
+            else{
             try {
                 if(format.parse(line.get(16)).compareTo(edate)<=0){
                     if(format.parse(line.get(16)).compareTo(sdate)>=0){
