@@ -106,20 +106,20 @@ public class Payments_List extends CSV_LIST{
                 ergebnisline.add("Waehrung");
                 ergebnisline.add("Umrechnungskurs");
                 ergebnisline.add("Betrag in Euro");
-                ergebnisline.add("Original-Date");
+//                ergebnisline.add("Original-Date");
             }
             else{
                 ergebnisline.add("1");
                 ergebnisline.add(line.get(7));
                 ergebnisline.add(line.get(21));
-                if(!line.get(22).equals("")){ergebnisline.add(line.get(22));}else{ergebnisline.add("1");}
+                ergebnisline.add("1");
                 ergebnisline.add(line.get(14));
                 ergebnisline.add(line.get(16));
                 ergebnisline.add(" ");
                 ergebnisline.add(line.get(24));
                 ergebnisline.add("0");
                 ergebnisline.add("0");
-                ergebnisline.add(line.get(line.size()-1));
+  //              ergebnisline.add(line.get(line.size()-1));
             }
             i++;
             ergebnisliste.GET_list().add(ergebnisline);
