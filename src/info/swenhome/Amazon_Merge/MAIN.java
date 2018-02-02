@@ -69,7 +69,9 @@ public class MAIN {
                 e.printStackTrace();
             }
         }
-        payments=payments.Zusammenfassen();
+        payments=payments.Zusammenfassen_mit();
+        payments=payments.Summieren();
+        payments=payments.Zusammenfassen_ohne();
         payments.SAVE_LIST(fc_writefile.getSelectedFile());
     }
 
@@ -104,7 +106,9 @@ public class MAIN {
                 e.printStackTrace();
             }
         }
-        payments=payments.Zusammenfassen();
+        payments=payments.Zusammenfassen_mit();
+        payments=payments.Summieren();
+        payments=payments.Zusammenfassen_ohne();
         payments.SAVE_LIST(fc_writefile.getSelectedFile());
     }
 
