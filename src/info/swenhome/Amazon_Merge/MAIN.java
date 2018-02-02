@@ -1,6 +1,6 @@
 package info.swenhome.Amazon_Merge;
 
-import info.swenhome.Amazon_Merge.Listing_Tools.CSV_LIST;
+
 import info.swenhome.Amazon_Merge.Listing_Tools.Orders_List;
 import info.swenhome.Amazon_Merge.Listing_Tools.Payments_List;
 import info.swenhome.Amazon_Merge.Supplements.Action_Chooser;
@@ -9,6 +9,8 @@ import info.swenhome.Amazon_Merge.Supplements.Date_Chooser;
 import info.swenhome.Amazon_Merge.Supplements.Ladebalken;
 
 import javax.swing.*;
+import java.io.File;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,9 +38,10 @@ public class MAIN {
     }
 
     private static void Refund_Verarbeiten(){
-        Orders_List orders=new Orders_List();
+
         Payments_List payments=new Payments_List();
         JFileChooser fc_payments = new JFileChooser();
+        fc_payments.setCurrentDirectory(new File("Y:/Amazon/Berichte/Zahlungen"));
         fc_payments.setDialogTitle("Payments_Liste auswählen");
         fc_payments.showOpenDialog(null);
         payments.FILE_TO_LIST(fc_payments.getSelectedFile());
@@ -60,6 +63,7 @@ public class MAIN {
         payments=payments.REPLACE_Date(buchungsdatum.GETDATE());
         //payments.PRINT_LIST();
         JFileChooser fc_writefile=new JFileChooser();
+        fc_writefile.setCurrentDirectory(new File("Y:/Amazon/Berichte/Zahlungen"));
         fc_writefile.setDialogTitle("Datei speichern unter");
         fc_writefile.showSaveDialog(null);
         if(!fc_writefile.getSelectedFile().exists()){
@@ -79,6 +83,7 @@ public class MAIN {
         Orders_List orders=new Orders_List();
         Payments_List payments=new Payments_List();
         JFileChooser fc_payments = new JFileChooser();
+        fc_payments.setCurrentDirectory(new File("Y:/Amazon/Berichte/Zahlungen"));
         fc_payments.setDialogTitle("Payments_Liste auswählen");
         fc_payments.showOpenDialog(null);
         payments.FILE_TO_LIST(fc_payments.getSelectedFile());
@@ -97,6 +102,7 @@ public class MAIN {
         payments=payments.FILTER_BY_DATE(first_date.GETDATE(),end_date.GETDATE());
 
         JFileChooser fc_writefile=new JFileChooser();
+        fc_writefile.setCurrentDirectory(new File("Y:/Amazon/Berichte/Zahlungen"));
         fc_writefile.setDialogTitle("Datei speichern unter");
         fc_writefile.showSaveDialog(null);
         if(!fc_writefile.getSelectedFile().exists()){
@@ -117,11 +123,13 @@ public class MAIN {
         Payments_List payments=new Payments_List();
         //Listen Einlesen
         JFileChooser fc = new JFileChooser();
+        fc.setCurrentDirectory(new File("Y:/Amazon/Berichte/Zahlungen"));
         fc.setDialogTitle("Orders_Liste auswählen");
         fc.showOpenDialog(null);
         orders.FILE_TO_LIST(fc.getSelectedFile());
 
         JFileChooser fc_payments = new JFileChooser();
+        fc_payments.setCurrentDirectory(new File("Y:/Amazon/Berichte/Zahlungen"));
         fc_payments.setDialogTitle("Payments_Liste auswählen");
         fc_payments.showOpenDialog(null);
         payments.FILE_TO_LIST(fc_payments.getSelectedFile());
@@ -162,10 +170,12 @@ public class MAIN {
         Payments_List payments=new Payments_List();
         Payments_List payments2=new Payments_List();
         JFileChooser fc_payments = new JFileChooser();
+        fc_payments.setCurrentDirectory(new File("Y:/Amazon/Berichte/Zahlungen"));
         fc_payments.setDialogTitle("Erste Payments_Liste auswählen");
         fc_payments.showOpenDialog(null);
         payments.FILE_TO_LIST(fc_payments.getSelectedFile());
         JFileChooser fc_payments2 = new JFileChooser();
+        fc_payments2.setCurrentDirectory(new File("Y:/Amazon/Berichte/Zahlungen"));
         fc_payments2.setDialogTitle("Zweite Payments_Liste auswählen");
         fc_payments2.showOpenDialog(null);
         payments2.FILE_TO_LIST(fc_payments2.getSelectedFile());
@@ -209,6 +219,8 @@ public class MAIN {
             case 1:
                 Orders_List verarbeitet=Orders_Abgleichen();
                 JFileChooser fc_writefile_ca1=new JFileChooser();
+                fc_writefile_ca1.setCurrentDirectory(new File("Y:/Amazon/Berichte/Zahlungen"));
+
                 fc_writefile_ca1.setDialogTitle("Datei speichern unter");
                 fc_writefile_ca1.showSaveDialog(null);
                 if(!fc_writefile_ca1.getSelectedFile().exists()){
@@ -226,6 +238,7 @@ public class MAIN {
             case 4:
                 Payments_List merged = CSV_Merge();
                 JFileChooser fc_writefile_ca4=new JFileChooser();
+                fc_writefile_ca4.setCurrentDirectory(new File("Y:/Amazon/Berichte/Zahlungen"));
                 fc_writefile_ca4.setDialogTitle("Datei speichern unter");
                 fc_writefile_ca4.showSaveDialog(null);
                 if(!fc_writefile_ca4.getSelectedFile().exists()){

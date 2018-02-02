@@ -144,8 +144,9 @@ public class Payments_List extends CSV_LIST {
         Payments_List ergebnisliste = new Payments_List();
         int i = 0;
         for (List<String> line : this.GET_list()) {
-            List<String> ergebnisline = new ArrayList<>();
+            List<String> ergebnisline;
             line.set(4,line.get(4).replace('-',' '));
+            line.set(4,line.get(4).replace('.',','));
             line.remove(line.size()-1);
             line.remove(line.size()-1);
             ergebnisline=line;
