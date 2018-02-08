@@ -76,6 +76,7 @@ public class MAIN {
         payments=payments.Zusammenfassen_mit();
         payments=payments.Summieren();
         payments=payments.Zusammenfassen_ohne();
+        payments=payments.Auftrennen();
         payments.SAVE_LIST(fc_writefile.getSelectedFile());
     }
 
@@ -115,6 +116,7 @@ public class MAIN {
         payments=payments.Zusammenfassen_mit();
         payments=payments.Summieren();
         payments=payments.Zusammenfassen_ohne();
+        payments=payments.Auftrennen();
         payments.SAVE_LIST(fc_writefile.getSelectedFile());
     }
 

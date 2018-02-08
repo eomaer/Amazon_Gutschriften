@@ -219,22 +219,25 @@ public class Payments_List extends CSV_LIST {
     public Payments_List Auftrennen(){
         Payments_List ergebnisliste=new Payments_List();
         Payments_List teilgutschriften=new Payments_List();
+        float value;
+        float vergleich;
         int i=0;
-        for (List<String> line: this.GET_list()){
-            if(i==0){
+        for (List<String> line: this.GET_list()) {
+            if (i == 0) {
                 ergebnisliste.GET_list().add(line);
                 teilgutschriften.GET_list().add((line));
-            }
-            else {
-                BigDecimal value = new BigDecimal(line.get(4));
-                BigDecimal vergleich = new BigDecimal("10,00");
-                if (value.compareTo(vergleich) < 0) {
+            } else {
+                vergleich=10.00f;
+                value= Float.valueOf(line.get(4).replace(',','.'));
+                if (value>vergleich) {
                     ergebnisliste.GET_list().add(line);
-                } else{
+                } else {
                     teilgutschriften.GET_list().add(line);
                 }
+
             }
             i++;
+        }
             int test=teilgutschriften.GET_list().size();
             if(teilgutschriften.GET_list().size()>1){
             JFileChooser fc_writefile=new JFileChooser();
@@ -249,7 +252,7 @@ public class Payments_List extends CSV_LIST {
                 }
             }
             teilgutschriften.SAVE_LIST(fc_writefile.getSelectedFile());}
-        }
+
 
         return ergebnisliste;
     }
