@@ -1,5 +1,8 @@
 package info.swenhome.Amazon_Merge.Listing_Tools;
 
+import javax.swing.*;
+import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -34,7 +37,7 @@ public class Payments_List extends CSV_LIST {
         return ergebnisliste;
     }
 
-    private Payments_List ZAHLUNGEN_VERARBEITEN(String currency) {
+    private void ZAHLUNGEN_VERARBEITEN(String currency) {
         this.ADD_COLUMN("currency");
         int i = 0;
         for (List<String> line : this.GET_list()) {
@@ -46,7 +49,6 @@ public class Payments_List extends CSV_LIST {
             }
             i++;
         }
-        return this;
     }
 
     public Payments_List FILTER_BY_DATE(String StartDate, String EndDate) {
@@ -115,6 +117,10 @@ public class Payments_List extends CSV_LIST {
                 ergebnisline.add("Waehrung");
                 ergebnisline.add("Umrechnungskurs");
                 ergebnisline.add("Betrag in Euro");
+                ergebnisline.add("Infofeld 1");
+                ergebnisline.add("Infofeld 2");
+                ergebnisline.add("Infofeld 3");
+                ergebnisline.add("Infofeld 4");
 //                ergebnisline.add("Original-Date");
                 ergebnisline.add("Type");
                 ergebnisline.add("desc");
@@ -130,6 +136,10 @@ public class Payments_List extends CSV_LIST {
                 ergebnisline.add(line.get(24));
                 ergebnisline.add("0");
                 ergebnisline.add("0");
+                ergebnisline.add(" ");
+                ergebnisline.add(" ");
+                ergebnisline.add(" ");
+                ergebnisline.add(" ");
                 //              ergebnisline.add(line.get(line.size()-1));
                 ergebnisline.add(line.get(12));
                 ergebnisline.add(line.get(13));
@@ -175,8 +185,8 @@ public class Payments_List extends CSV_LIST {
         List<String> oldline = new ArrayList<>();
         Payments_List ergebnisliste = new Payments_List();
         int i = 0;
-        BigDecimal wertalt=new BigDecimal(0.0);
-        BigDecimal wertneu=new BigDecimal(0.0);
+        BigDecimal wertalt;
+        BigDecimal wertneu;
 
         for (List<String> line : this.GET_list()) {
             if (i == 0) {
@@ -185,7 +195,7 @@ public class Payments_List extends CSV_LIST {
             else if(i==1){oldline=line;}
             else{
                 if(oldline.get(1).equals(line.get(1))){
-                    if(oldline.get(10).equals("ItemPrice")||oldline.get(10).equals("Promotion")){
+                    if(oldline.get(14).equals("ItemPrice")||oldline.get(14).equals("Promotion")){
                         wertalt=new BigDecimal(oldline.get(4).replace(',','.'));
                         wertneu=new BigDecimal(line.get(4).replace(',','.'));
                         BigDecimal summe=wertalt;
@@ -193,8 +203,6 @@ public class Payments_List extends CSV_LIST {
                         summe=summe.setScale(2,BigDecimal.ROUND_HALF_UP);
                         oldline.set(4,summe.toString());
                         oldline.set(4,oldline.get(4).replace('.',','));
-                    }
-                    else {//do nothing
                     }
                 }
                 else{
@@ -208,4 +216,42 @@ public class Payments_List extends CSV_LIST {
 
         return ergebnisliste;
     }
+    public Payments_List Auftrennen(){
+        Payments_List ergebnisliste=new Payments_List();
+        Payments_List teilgutschriften=new Payments_List();
+        int i=0;
+        for (List<String> line: this.GET_list()){
+            if(i==0){
+                ergebnisliste.GET_list().add(line);
+                teilgutschriften.GET_list().add((line));
+            }
+            else {
+                BigDecimal value = new BigDecimal(line.get(4));
+                BigDecimal vergleich = new BigDecimal("10,00");
+                if (value.compareTo(vergleich) < 0) {
+                    ergebnisliste.GET_list().add(line);
+                } else{
+                    teilgutschriften.GET_list().add(line);
+                }
+            }
+            i++;
+            int test=teilgutschriften.GET_list().size();
+            if(teilgutschriften.GET_list().size()>1){
+            JFileChooser fc_writefile=new JFileChooser();
+            fc_writefile.setCurrentDirectory(new File("Y:/Amazon/Berichte/Zahlungen"));
+            fc_writefile.setDialogTitle("Teilgutschriften speichern unter");
+            fc_writefile.showSaveDialog(null);
+            if(!fc_writefile.getSelectedFile().exists()){
+                try {
+                    boolean id=fc_writefile.getSelectedFile().createNewFile();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            teilgutschriften.SAVE_LIST(fc_writefile.getSelectedFile());}
+        }
+
+        return ergebnisliste;
+    }
+
 }
