@@ -117,10 +117,10 @@ public class Payments_List extends CSV_LIST {
                 ergebnisline.add("Waehrung");
                 ergebnisline.add("Umrechnungskurs");
                 ergebnisline.add("Betrag in Euro");
-                ergebnisline.add("Infofeld 1");
-                ergebnisline.add("Infofeld 2");
-                ergebnisline.add("Infofeld 3");
-                ergebnisline.add("Infofeld 4");
+                ergebnisline.add("Infofeld1");
+                ergebnisline.add("Infofeld2");
+                ergebnisline.add("Infofeld3");
+                ergebnisline.add("Infofeld4");
 //                ergebnisline.add("Original-Date");
                 ergebnisline.add("Type");
                 ergebnisline.add("desc");
