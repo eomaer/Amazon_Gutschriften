@@ -227,7 +227,7 @@ public class Payments_List extends CSV_LIST {
                 ergebnisliste.GET_list().add(line);
                 teilgutschriften.GET_list().add((line));
             } else {
-                vergleich=10.00f;
+                vergleich=14.50f;
                 value= Float.valueOf(line.get(4).replace(',','.'));
                 if (value>vergleich) {
                     ergebnisliste.GET_list().add(line);
