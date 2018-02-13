@@ -1,5 +1,7 @@
 package info.swenhome.Amazon_Merge.Listing_Tools;
 
+import info.swenhome.Amazon_Merge.Supplements.Marketplace_Chooser;
+
 import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
@@ -103,6 +105,8 @@ public class Payments_List extends CSV_LIST {
 
     public Payments_List Zusammenfassen_mit() {
         Payments_List ergebnisliste = new Payments_List();
+
+        Marketplace_Chooser market=new Marketplace_Chooser();
         int i = 0;
         for (List<String> line : this.GET_list()) {
             List<String> ergebnisline = new ArrayList<>();
@@ -121,7 +125,7 @@ public class Payments_List extends CSV_LIST {
                 ergebnisline.add("Infofeld2");
                 ergebnisline.add("Infofeld3");
                 ergebnisline.add("Infofeld4");
-//                ergebnisline.add("Original-Date");
+//              ergebnisline.add("Original-Date");
                 ergebnisline.add("Type");
                 ergebnisline.add("desc");
 
@@ -136,11 +140,11 @@ public class Payments_List extends CSV_LIST {
                 ergebnisline.add(line.get(24));
                 ergebnisline.add("0");
                 ergebnisline.add("0");
+                ergebnisline.add(market.GET_MARKET());
                 ergebnisline.add(" ");
                 ergebnisline.add(" ");
                 ergebnisline.add(" ");
-                ergebnisline.add(" ");
-                //              ergebnisline.add(line.get(line.size()-1));
+//              ergebnisline.add(line.get(line.size()-1));
                 ergebnisline.add(line.get(12));
                 ergebnisline.add(line.get(13));
             }

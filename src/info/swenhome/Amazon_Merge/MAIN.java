@@ -3,6 +3,7 @@ package info.swenhome.Amazon_Merge;
 
 import info.swenhome.Amazon_Merge.Listing_Tools.Orders_List;
 import info.swenhome.Amazon_Merge.Listing_Tools.Payments_List;
+import info.swenhome.Amazon_Merge.Listing_Tools.Storage_List;
 import info.swenhome.Amazon_Merge.Supplements.Action_Chooser;
 import info.swenhome.Amazon_Merge.Supplements.Currency_Chooser;
 import info.swenhome.Amazon_Merge.Supplements.Date_Chooser;
@@ -211,7 +212,28 @@ public class MAIN {
         return ergebnisliste;
 
     }
-
+    static void Lager_Verarbeiten(){
+        Storage_List storage=new Storage_List();
+        //Listen Einlesen
+        JFileChooser fc = new JFileChooser();
+        fc.setCurrentDirectory(new File("Y:/Amazon/Berichte/Zahlungen"));
+        fc.setDialogTitle("Orders_Liste auswählen");
+        fc.showOpenDialog(null);
+        storage.FILE_TO_LIST(fc.getSelectedFile());
+        storage=storage.Verarbeiten();
+        JFileChooser fc_writefile=new JFileChooser();
+        fc_writefile.setCurrentDirectory(new File("Y:/Amazon/Berichte/Zahlungen"));
+        fc_writefile.setDialogTitle("Datei speichern unter");
+        fc_writefile.showSaveDialog(null);
+        if(!fc_writefile.getSelectedFile().exists()){
+            try {
+                boolean id=fc_writefile.getSelectedFile().createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        storage.SAVE_LIST(fc_writefile.getSelectedFile());
+    }
     public static void main (String[] args) {
         //Was Tun?
         Action_Chooser ac=new Action_Chooser("Bitte Aktion wählen:");
@@ -254,6 +276,9 @@ public class MAIN {
                 break;
             case 5:
                 Refund_Verarbeiten2();
+                break;
+            case 6:
+                Lager_Verarbeiten();
                 break;
             default:
                 JOptionPane.showMessageDialog(new JFrame(),"Man kann nicht keine Aktion ausführen!","Keine Aktion gewählt!", JOptionPane.ERROR_MESSAGE);

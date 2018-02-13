@@ -6,7 +6,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Properties;
 
 import org.jdatepicker.impl.*;
@@ -16,12 +18,16 @@ public class Date_Chooser extends JFrame implements ActionListener {
     private String date="";
     private Date ddate=null;
     private JButton abschickenButton=new JButton("Abschicken");
+    private JButton HeuteButton=new JButton("Heute");
+    private JButton GesternButton=new JButton("Gestern");
     private JDatePanelImpl datePanel;
     private JDatePickerImpl datePicker;
     private String declare="";
     public Date_Chooser(String declaration){
         this.declare=declaration;
         this.abschickenButton.addActionListener(this);
+        this.HeuteButton.addActionListener(this);
+        this.GesternButton.addActionListener(this);
         UtilDateModel model = new UtilDateModel();
         //Das Datumsformat festlegen
         Properties p=new Properties();
@@ -41,6 +47,8 @@ public class Date_Chooser extends JFrame implements ActionListener {
         //Spacer deklarieren
         JPanel space=new JPanel();
         space.setLayout(new GridLayout(5,5,5,5));
+        space.add(HeuteButton);
+        space.add(GesternButton);
         space.add(new JLabel(" ",SwingConstants.CENTER));
         space.add(datePicker);
 
@@ -68,6 +76,24 @@ public class Date_Chooser extends JFrame implements ActionListener {
         this.date=df.format(GET_DATE_OBJ());
         this.action_performed=true;
     }
+    public void SET_VARS2 (){
+        GregorianCalendar now = new GregorianCalendar();
+        DateFormat df=new SimpleDateFormat("dd.MM.YYYY");
+        this.date=df.format(now.getTime());
+        this.action_performed=true;
+    }
+    public void SET_VARS3 (){
+        DateFormat df=new SimpleDateFormat("dd.MM.YYYY");
+        this.date=df.format(this.yesterday());
+        this.action_performed=true;
+    }
+    private Date yesterday()
+    {
+        final Calendar cal =Calendar.getInstance();
+        cal.add(Calendar.DATE, -1);
+        return cal.getTime();
+
+    }
     public String GETDATE(){
         return this.date;
     }
@@ -80,6 +106,16 @@ public class Date_Chooser extends JFrame implements ActionListener {
         {
             this.setVisible(false);
             this.SET_VARS();
+        }
+        if (e.getActionCommand().equals("Heute"))
+        {
+            this.setVisible(false);
+            this.SET_VARS2();
+        }
+        if (e.getActionCommand().equals("Gestern"))
+        {
+            this.setVisible(false);
+            this.SET_VARS3();
         }
     }
 

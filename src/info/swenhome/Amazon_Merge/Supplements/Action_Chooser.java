@@ -18,11 +18,13 @@ public class Action_Chooser extends JFrame implements ActionListener, WindowList
         private JButton RefundButton2=new JButton("Refunds vorbereiten ohne Datum");
         private JButton AuftragButton=new JButton("Aufträge vorbereiten");
         private JButton PaymentsButton=new JButton("Payments kombinieren");
+        private JButton StorageButton=new JButton("Lagerbestände vorbereiten");
         public Action_Chooser(String declaration){
             this.AuftragButton.addActionListener(this);
             this.RefundButton.addActionListener(this);
             this.PaymentsButton.addActionListener(this);
             this.RefundButton2.addActionListener(this);
+            this.StorageButton.addActionListener(this);
             //Erklärung schreiben
             JLabel declarationPanel=new JLabel("Bitte Aktion wählen",SwingConstants.CENTER);
             JPanel declarationSpace=new JPanel();
@@ -34,11 +36,12 @@ public class Action_Chooser extends JFrame implements ActionListener, WindowList
             space.add(new JLabel(" ",SwingConstants.CENTER));
 
             JPanel buttons=new JPanel();
-            buttons.setLayout(new GridLayout(2,2));
+            buttons.setLayout(new GridLayout(3,2));
             buttons.add(RefundButton);
             buttons.add(RefundButton2);
             buttons.add(AuftragButton);
             buttons.add(PaymentsButton);
+            buttons.add(StorageButton);
 
             //Fenster Aufbauen
             setBounds(100,100,400,150);
@@ -72,6 +75,8 @@ public class Action_Chooser extends JFrame implements ActionListener, WindowList
                     this.action_choosed=4;
                 }else if(e.getSource()==RefundButton2){
                     this.action_choosed=5;
+                }else if(e.getSource()==StorageButton){
+                    this.action_choosed=6;
                 }
                 this.action_performed=true;
     }
