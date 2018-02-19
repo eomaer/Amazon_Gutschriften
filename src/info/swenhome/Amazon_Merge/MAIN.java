@@ -154,10 +154,11 @@ public class MAIN {
             for(List<String> oline:orders.GET_list()){
                 i++;
                 if(order_id.equals(oline.get(0))){
-                    if(line.get(21).equals(oline.get(11))) {
+                    if(line.get(21).equals(oline.get(13))) {
                         List<String> ergebnis_line = new ArrayList<>(oline);
-                        ergebnis_line.set(15,line.get(24).replace(',','.'));
-                        ergebnis_line.set(16,line.get(14).replace(',','.'));
+                        //ergebnis_line.set(16,line.get(36).replace(',','.'));
+                        ergebnis_line.set(17,line.get(24).replace(',','.'));
+
                         ergebnis_line.set(ergebnis_line.size()-1,"REFUND");
                         orders.GET_list().add(ergebnis_line);
                         break;
@@ -191,7 +192,7 @@ public class MAIN {
                 ergebnisliste.GET_list().add(line);
             }
             if(line.get(2).isEmpty()){
-                if(!line.get(6).equals("other-transaction")) {
+                if((!line.get(6).equals("other-transaction"))&&(line.get(6).equals("Order")||line.get(6).equals("Refund"))) {
                     ergebnisliste.GET_list().add(line);
                 }
             }
@@ -273,6 +274,19 @@ public class MAIN {
                     }
                 }
                 merged.SAVE_LIST(fc_writefile_ca4.getSelectedFile());
+                Payments_List merged2 = CSV_Merge();
+                JFileChooser fc_writefile_ca42=new JFileChooser();
+                fc_writefile_ca42.setCurrentDirectory(new File("Y:/Amazon/Berichte/Zahlungen"));
+                fc_writefile_ca42.setDialogTitle("Datei speichern unter");
+                fc_writefile_ca42.showSaveDialog(null);
+                if(!fc_writefile_ca42.getSelectedFile().exists()){
+                    try {
+                        boolean id=fc_writefile_ca42.getSelectedFile().createNewFile();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                merged2.SAVE_LIST(fc_writefile_ca42.getSelectedFile());
                 break;
             case 5:
                 Refund_Verarbeiten2();

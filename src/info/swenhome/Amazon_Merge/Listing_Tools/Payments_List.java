@@ -28,7 +28,7 @@ public class Payments_List extends CSV_LIST {
             }
             if (line.size() > 7) {
                 if (line.get(6).equals("Refund")) {
-                    if ((line.get(12).equals("ItemPrice")) || (line.get(12).equals("Promotion"))) {
+                    if ((line.get(23).equals("Principal"))||(line.get(23).equals("Shipping"))||(line.get(23).equals("GiftWrap"))||(line.get(23).equals("Goodwill"))) {
                         ergebnisliste.GET_list().add(line);
                     }
                 }
